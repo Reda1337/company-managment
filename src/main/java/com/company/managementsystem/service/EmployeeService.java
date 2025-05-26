@@ -30,16 +30,11 @@ public class EmployeeService {
 
     @Transactional
     public EmployeeResponse createEmployee(EmployeeCreateRequest request) {
-        // check if email already exists
-        if (employeeRepository.findByEmail(request.getEmail()).isPresent()) {
-            throw new BusinessException("Email already exists: " + request.getEmail());
-        }
 
         // Create employee entity
         Employee employee = new Employee();
         employee.setFirstName(request.getFirstName());
         employee.setLastName(request.getLastName());
-        employee.setEmail(request.getEmail());
         employee.setPhone(request.getPhone());
         employee.setPosition(request.getPosition());
         employee.setSalary(request.getSalary());
@@ -60,6 +55,11 @@ public class EmployeeService {
 
     private EmployeeResponse convertToResponse(Employee employee) {
         EmployeeResponse response = modelMapper.map(employee, EmployeeResponse.class);
+
+        // Set email from User if exists
+        if (employee.getUser() != null) {
+            response.setEmail(employee.getUser().getEmail());
+        }
 
         // Handle the department mapping explicitly
         if (employee.getDepartment() != null) {
@@ -98,14 +98,6 @@ public class EmployeeService {
         }
         if (request.getLastName() != null) {
             employee.setLastName(request.getLastName());
-        }
-        if (request.getEmail() != null) {
-            // Check if email is being changed and if new email already exists
-            if (!employee.getEmail().equals(request.getEmail()) &&
-                employeeRepository.findByEmail(request.getEmail()).isPresent()) {
-                throw  new BusinessException("Email already exists: " + request.getEmail());
-            }
-            employee.setEmail(request.getEmail());
         }
         if (request.getPhone() != null) {
             employee.setPhone(request.getPhone());

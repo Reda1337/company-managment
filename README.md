@@ -17,7 +17,7 @@ Spring Boot application for managing company operations including employees, dep
 - **Security**: Spring Security with JWT
 - **Documentation**: OpenAPI 3.0 (Swagger)
 - **Containerization**: Docker & Docker Compose
-- **Build Tool**: Maven
+- **Build Tool**: Gradle
 - **Database Tools**: Adminer, pgAdmin
 
 ## 📋 Prerequisites
@@ -25,7 +25,6 @@ Spring Boot application for managing company operations including employees, dep
 All tools are free:
 - Java 17 or higher (OpenJDK recommended)
 - Docker & Docker Compose
-- Maven 3.8+
 - Git
 - IDE: IntelliJ IDEA Community Edition
 
