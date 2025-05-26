@@ -26,9 +26,6 @@ public class Employee {
     @Column(nullable = false)
     private String lastName;
 
-    @Column(nullable = false, unique = true)
-    private String email;
-
     private String phone;
 
     private String position;
@@ -39,6 +36,10 @@ public class Employee {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")
     private Department department;
+
+    @OneToOne
+    @JoinColumn(name = "user_id", unique = true)
+    private User user;
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
